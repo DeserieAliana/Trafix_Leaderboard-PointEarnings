@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trafix App - Point Earnings and Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .table-container {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table-container th, .table-container td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        .table-container th {
+            background-color: #333;
+            color: white;
+        }
+        .button {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background-color: #555;
+        }
+        .points-section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Trafix App - Point Earnings & Leaderboard</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Point Earnings Section -->
+        <div class="points-section">
+            <h2>Point Earnings</h2>
+            <p>Earn points by performing actions:</p>
+            <ul>
+                <li>Travel 1km = <strong>1 Point</strong></li>
+                <li>Redeem Gift Card = <strong>50 Points</strong></li>
+                <li>Daily Log In = <strong>0.5 Points</strong></li>
+                <li>Welcome Reward (once) = <strong>10 Points</strong></li>
+            </ul>
+            <button class="button" id="travelBtn">Simulate Travel 1km</button>
+            <button class="button" id="giftCardBtn">Redeem Gift Card</button>
+            <button class="button" id="loginBtn">Log In</button>
+            <button class="button" id="welcomeBtn">Claim Welcome Reward</button>
+        </div>
+
+        <!-- Leaderboard Section -->
+        <div class="table-container">
+            <h2>Leaderboard</h2>
+            <table id="leaderboard">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <!-- Leaderboard entries will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Global user data
+        const users = [
+            { username: "User1", points: 0 },
+            { username: "User2", points: 0 },
+            { username: "User3", points: 0 }
+        ];
+
+        // Display leaderboard
+        function updateLeaderboard() {
+            const leaderboardBody = document.getElementById("leaderboardBody");
+            leaderboardBody.innerHTML = ""; // Clear the leaderboard
+
+            // Sort users by points in descending order
+            const sortedUsers = users.sort((a, b) => b.points - a.points);
+
+            // Add sorted users to the leaderboard table
+            sortedUsers.forEach((user, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td>${index + 1}</td><td>${user.username}</td><td>${user.points}</td>`;
+                leaderboardBody.appendChild(row);
+            });
+        }
+
+        // Update points when actions are performed
+        document.getElementById("travelBtn").addEventListener("click", () => {
+            users[0].points += 1; // Simulate User1 traveling 1km
+            updateLeaderboard();
+        });
+
+        document.getElementById("giftCardBtn").addEventListener("click", () => {
+            users[1].points += 50; // Simulate User2 redeeming a gift card
+            updateLeaderboard();
+        });
+
+        document.getElementById("loginBtn").addEventListener("click", () => {
+            users[2].points += 0.5; // Simulate User3 logging in
+            updateLeaderboard();
+        });
+
+        document.getElementById("welcomeBtn").addEventListener("click", () => {
+            users[0].points += 10; // Simulate User1 claiming the welcome reward
+            updateLeaderboard();
+        });
+
+        // Initialize the leaderboard
+        updateLeaderboard();
+    </script>
+</body>
+</html>
